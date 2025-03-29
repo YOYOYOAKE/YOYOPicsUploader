@@ -1,0 +1,113 @@
+{
+  "name": "yoyo-pics-uploader",
+  "displayName": "YOYOPicsUploader",
+  "description": "一个将剪贴板或本地图片优雅地上传到 Minio 的 VSCode 扩展。",
+  "version": "0.9.27",
+  "engines": {
+    "vscode": "^1.98.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "repository": {
+    "url": "https://github.com/YOYOYOAKE/YOYOPicsUploader"
+  },
+  "publisher": "YOYOYOAKE",
+  "icon": "public/logo.png",
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "yoyo-pics-uploader.upload-clipboard-pic",
+        "title": "Upload clipboard image"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "yoyo-pics-uploader.upload-clipboard-pic",
+        "key": "ctrl+shift+v",
+        "when": "editorTextFocus"
+      }
+    ],
+    "configuration": [
+      {
+        "title": "YOYOPicsUploader",
+        "properties": {
+          "yoyo-pics-uploader.serverAddress": {
+            "default": "",
+            "type": "string",
+            "markdownDescription": "此处填写 Minio 服务地址\ne.g `http://my-minio.xyz:5900`",
+            "pattern": "(^https?://)|(^$)",
+            "order": 0
+          },
+          "yoyo-pics-uploader.accessKey": {
+            "default": "",
+            "type": "string",
+            "markdownDescription": "此处填写 Access key",
+            "order": 1
+          },
+          "yoyo-pics-uploader.secretKey": {
+            "default": "",
+            "type": "string",
+            "markdownDescription": "此处填写 Secret key",
+            "order": 2
+          },
+          "yoyo-pics-uploader.bucket": {
+            "default": "",
+            "type": "string",
+            "description": "图片将要上传到的 Bucket",
+            "order": 3
+          },
+          "yoyo-pics-uploader.directory": {
+            "default": "",
+            "type": "string",
+            "markdownDescription": "图片将要上传的目录\ne.g. `images/2025`",
+            "pattern": "^[^/].*[^/]$",
+            "order": 4
+          }
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run package",
+    "compile": "yarn run check-types && yarn run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "yarn run check-types && yarn run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.98.0",
+    "@typescript-eslint/eslint-plugin": "^8.25.0",
+    "@typescript-eslint/parser": "^8.25.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "esbuild": "^0.25.0",
+    "eslint": "^9.21.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "@img/sharp-win32-x64": "^0.33.5",
+    "color": "^5.0.0",
+    "color-convert": "^3.0.1",
+    "color-name": "^2.0.0",
+    "dayjs": "^1.11.13",
+    "detect-libc": "^2.0.3",
+    "is-arrayish": "^0.3.2",
+    "minio": "^8.0.5",
+    "node-gyp": "^11.1.0",
+    "semver": "^7.7.1",
+    "sharp": "0.33.5",
+    "simple-swizzle": "^0.2.2"
+  }
+}
