@@ -18,7 +18,7 @@ export class MinioConfBtn {
     // 读取 Minio 配置
     const minioConfig = AppContext.extContext.globalState.get('minioConfig') || undefined
     const { name } = (minioConfig as MinioConfig) || {}
-    this.button.text = name ? `$(gear) ${name}` : "$(gear) 尚未选择 Minio 配置"
+    this.button.text = name ? `${name}` : "尚未选择 Minio 配置"
     this.button.command = `${AppContext.extName}.openMinioConfigList`
     this.button.show()
 
@@ -37,9 +37,9 @@ export class MinioConfBtn {
     if (this.button) {
       const config = ConfigManager.getInstance().getMinioConfig()
       if (config) {
-        this.button.text = `$(gear) ${config.name}`
+        this.button.text = `${config.name}`
       } else {
-        this.button.text = "$(gear) 尚未选择 Minio 配置"
+        this.button.text = "尚未选择 Minio 配置"
       }
       // 保存 Minio 配置
       AppContext.extContext.globalState.update('minioConfig', config)
@@ -68,7 +68,7 @@ export class PathConfBtn {
     // 读取上传路径配置
     const pathConfig = AppContext.extContext.globalState.get('pathConfig') || undefined
     const { bucket, directory } = (pathConfig as PathConfig) || {}
-    this.button.text = bucket && directory ? `$(gear) ${bucket}/${directory}` : "$(gear) 尚未选择上传路径"
+    this.button.text = bucket && directory ? `${bucket}/${directory}` : "尚未选择上传路径"
     this.button.command = `${AppContext.extName}.openPathConfigList`
     this.button.show()
 
@@ -87,9 +87,9 @@ export class PathConfBtn {
     if (this.button) {
       const config = ConfigManager.getInstance().getPathConfig()
       if (config) {
-        this.button.text = `$(gear) ${config.bucket}/${config.directory}`
+        this.button.text = `${config.bucket}/${config.directory}`
       } else {
-        this.button.text = "$(gear) 尚未选择上传路径"
+        this.button.text = "尚未选择上传路径"
       }
       // 保存上传路径配置
       AppContext.extContext.globalState.update('pathConfig', config)
