@@ -9,6 +9,7 @@
 - ✅ 支持从剪贴板直接粘贴图片
 - ✅ 自动生成并插入 Markdown 图片链接
 - ✅ 自定义 Minio 服务器连接配置
+- ✅ 配置多个 Minio 服务器和上传路径
 - ✅ 自动将图片压缩为 WebP 格式
 
 待开发的功能
@@ -30,18 +31,36 @@
 
 ## 0x03 配置
 
-在 VS Code 设置 - 扩展 - YOYOPicsUploader 中配置`Server Address` `Access Key` `Secret Key` `Bucket` `Directory`。
+在 VS Code 设置 - 扩展 - YOYOPicsUploader 中配置`Minio Services` `Upload Paths`，点击**在 settings.json 中编辑**按钮，将在`settings.json`中生成默认配置。
 
 或者在`settings.json`中添加以下配置：
 
 ```json
-{
-  "yoyo-pics-uploader.serverAddress": "your-minio-service-server-address",
-  "yoyo-pics-uploader.accessKey": "your-access-key",
-  "yoyo-pics-uploader.secretKey": "your-secret-key",
-  "yoyo-pics-uploader.bucket": "your-bucket-name",
-  "yoyo-pics-uploader.directory": "your-images-directory",
-}
+  "yoyo-pics-uploader.minioServices": [
+    {
+      "name": "your-service-name",
+      "serverAddress": "https://your-minio-server-address",
+      "accessKey": "your-access-key",
+      "secretKey": "your-secret-key"
+    },
+    {
+      "name": "another-service-name",
+      "serverAddress": "https://another-minio-server-address",
+      "accessKey": "another-access-key",
+      "secretKey": "another-secret-key"
+    }
+  ],
+    "yoyo-pics-uploader.uploadPaths": [
+    {
+      "bucket": "your-bucket-name",
+      "directory": "images/2025"
+    },
+    {
+      "bucket": "another-bucket-name",
+      "directory": "images/2026"
+    }
+  ],
+
 ```
 
 ## 0x04 使用
