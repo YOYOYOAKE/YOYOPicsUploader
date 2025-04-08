@@ -1,12 +1,12 @@
 import dayjs from 'dayjs'
 import * as vscode from 'vscode'
-import { getConfig } from './config-manager'
+import { ConfigManager } from './config-manager'
 import { getMinioClient } from './minio-client'
 import { AppContext } from '../utils/app-context'
 
 export const uploadPic = async (webpBuffer: Buffer): Promise<string[]> => {
   const minioClient = getMinioClient()
-  const { clientConfig: { endPoint, useSSL }, bucket, directory } = getConfig()
+  const { clientConfig: { endPoint, useSSL }, bucket, directory } = ConfigManager.getInstance().getConfig()
 
   const filename = `${dayjs().valueOf()}.webp`
 

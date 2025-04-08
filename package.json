@@ -2,7 +2,7 @@
   "name": "yoyo-pics-uploader",
   "displayName": "YOYOPicsUploader",
   "description": "一个将剪贴板或本地图片优雅地上传到 Minio 的 VSCode 扩展。",
-  "version": "0.9.27",
+  "version": "0.9.28",
   "engines": {
     "vscode": "^1.98.0"
   },
@@ -15,11 +15,18 @@
   "publisher": "YOYOYOAKE",
   "icon": "public/logo.png",
   "main": "./dist/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "contributes": {
     "commands": [
       {
         "command": "yoyo-pics-uploader.upload-clipboard-pic",
         "title": "Upload clipboard image"
+      },
+      {
+        "command": "yoyo-pics-uploader.set-minio-service",
+        "title": "Set Minio service"
       }
     ],
     "keybindings": [
@@ -33,37 +40,85 @@
       {
         "title": "YOYOPicsUploader",
         "properties": {
-          "yoyo-pics-uploader.serverAddress": {
-            "default": "",
-            "type": "string",
-            "markdownDescription": "此处填写 Minio 服务地址\ne.g `http://my-minio.xyz:5900`",
-            "pattern": "(^https?://)|(^$)",
+          "yoyo-pics-uploader.minioServices": {
+            "type": "array",
+            "default": [
+              {
+                "name": "your-service-name",
+                "serverAddress": "https://your-minio-server-address",
+                "accessKey": "your-access-key",
+                "secretKey": "your-secret-key"
+              },
+              {
+                "name": "another-service-name",
+                "serverAddress": "https://another-minio-server-address",
+                "accessKey": "another-access-key",
+                "secretKey": "another-secret-key"
+              }
+            ],
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "serverAddress",
+                "accessKey",
+                "secretKey"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Minio 服务名称"
+                },
+                "serverAddress": {
+                  "type": "string",
+                  "description": "Minio 服务地址",
+                  "pattern": "(^https?://)|(^$)"
+                },
+                "accessKey": {
+                  "type": "string",
+                  "description": "Access key"
+                },
+                "secretKey": {
+                  "type": "string",
+                  "description": "Secret key"
+                }
+              }
+            },
+            "markdownDescription": "配置多个 Minio 服务",
             "order": 0
           },
-          "yoyo-pics-uploader.accessKey": {
-            "default": "",
-            "type": "string",
-            "markdownDescription": "此处填写 Access key",
+          "yoyo-pics-uploader.uploadPaths": {
+            "type": "array",
+            "default": [
+              {
+                "bucket": "your-bucket-name",
+                "directory": "images/2025"
+              },
+              {
+                "bucket": "another-bucket-name",
+                "directory": "images/2026"
+              }
+            ],
+            "items": {
+              "type": "object",
+              "required": [
+                "bucket",
+                "directory"
+              ],
+              "properties": {
+                "bucket": {
+                  "type": "string",
+                  "description": "Bucket 名称"
+                },
+                "directory": {
+                  "type": "string",
+                  "description": "配置多个上传目录\ne.g. `images/2025`",
+                  "pattern": "^[^/].*[^/]$"
+                }
+              }
+            },
+            "description": "配置多个 Bucket",
             "order": 1
-          },
-          "yoyo-pics-uploader.secretKey": {
-            "default": "",
-            "type": "string",
-            "markdownDescription": "此处填写 Secret key",
-            "order": 2
-          },
-          "yoyo-pics-uploader.bucket": {
-            "default": "",
-            "type": "string",
-            "description": "图片将要上传到的 Bucket",
-            "order": 3
-          },
-          "yoyo-pics-uploader.directory": {
-            "default": "",
-            "type": "string",
-            "markdownDescription": "图片将要上传的目录\ne.g. `images/2025`",
-            "pattern": "^[^/].*[^/]$",
-            "order": 4
           }
         }
       }

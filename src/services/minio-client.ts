@@ -1,11 +1,13 @@
 import * as vscode from 'vscode'
 import { Client } from 'minio'
-import { getConfig } from './config-manager'
+import { ConfigManager } from './config-manager'
 import { AppContext } from '../utils/app-context'
 
 export const getMinioClient = (): Client => {
   try {
-    const client = new Client(getConfig().clientConfig)
+    const extConfig = ConfigManager.getInstance().getConfig()
+    console.log(extConfig)
+    const client = new Client(extConfig.clientConfig)
     return client
   }
   catch (error) {
