@@ -6,7 +6,6 @@ import { AppContext } from '../utils/app-context'
 export const getMinioClient = (): Client => {
   try {
     const extConfig = ConfigManager.getInstance().getConfig()
-    console.log(extConfig)
     const client = new Client(extConfig.clientConfig)
     return client
   }

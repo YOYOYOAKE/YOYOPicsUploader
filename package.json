@@ -2,7 +2,7 @@
   "name": "yoyo-pics-uploader",
   "displayName": "YOYOPicsUploader",
   "description": "一个将剪贴板或本地图片优雅地上传到 Minio 的 VSCode 扩展。",
-  "version": "0.9.28",
+  "version": "0.9.29",
   "engines": {
     "vscode": "^1.98.0"
   },
