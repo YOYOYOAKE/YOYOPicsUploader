@@ -1,5 +1,5 @@
 import * as vscode from 'vscode'
-import { getClipboardPic } from "./get-clipboard-pic"
+import { getClipboardPic } from "../utils/get-clipboard-pic"
 import { transFormat } from '../utils/trans-format'
 import { uploadPic } from '../services/uploader'
 import { pastePic } from '../utils/paste-pic'
